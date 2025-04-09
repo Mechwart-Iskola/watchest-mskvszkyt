@@ -42,9 +42,9 @@
 .section__title {
     margin-top: 2rem;
     position: relative;
-    font-size: var(--h3-font-size);
+    font-size: var(--h1-font-size);
     margin-bottom: var(--mb-3);
-
+    text-transform: uppercase;
     letter-spacing: 2px;
     text-align: center;
 }
@@ -83,7 +83,7 @@
 
     .story__container {
         font-size: var(--normal-font-size);
-
+        grid-template-columns: repeat(2,1fr);
         align-items: center;
     }
 

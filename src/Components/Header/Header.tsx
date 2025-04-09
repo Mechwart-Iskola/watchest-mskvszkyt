@@ -1,55 +1,76 @@
+import { useState, useEffect } from 'react';
 import 'boxicons/css/boxicons.min.css';
 
 import Cart from '../Cart/Cart';
 import './header.css'
 
 const Header = () => {
+  const [darkTheme, setDarkTheme] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
-  {/*Adj a theme ikonhoz egy olyan funkciót amivel váltogatni lehet a light és dark mode között*/}
-  
-  {/*Adj egy funkciót a toggle ikonhoz amivel mobilnézetben le lehet nyitni a navigációs menüt a close ikonnal meg bezárni*/}
+  const handleTheme = () => {
+    setDarkTheme(!darkTheme);
+    document.body.classList.toggle('dark-theme');
+  }
 
-  {/*
-    Adj egy funkciót a cart-shop ikonhoz amivel le lehet nyitni a vásárlási listát
-    A vásárlási lista egy külön komponens.
-    */}
+  const handleToggleMenu = () => {
+    setShowMenu(!showMenu);
+  }
 
-  {/* Állítsd be az App.css-ben az ul osztályszelektornak, hogy a listaelemek pontok nélkül jelenjenek meg */}
+  const handleToggleCart = () => {
+    setShowCart(!showCart);
+  }
 
-  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && showMenu) {
+        setShowMenu(false);
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [showMenu]);
 
   return (
     <>
-    <header className="header" id="header">
-    <nav >
-        <a href="#" className="nav__logo">
+      <header className="header" id="header">
+        <nav>
+          <a href="#" className="nav__logo">
             <i className='bx bxs-watch nav__logo-icon'></i> Rolex
-        </a>
-        <div className="nav__menu"  id="nav-menu">      
+          </a>
+          <div className={`nav__menu ${showMenu ? 'show-menu' : ''}`} id="nav-menu">      
             <ul className="nav__list">
-                {/*
-                Készítsd el a Header-eket: Home, Featured, Products, New
-                Mindegyik egy listaelem, és azon belül egy hivatkozás
-                a listaelem ostrálya nav__item, a hivatkozás osztálya nav__link
-                */}
+              <li className="nav__item"><a href="#home" className="nav__link">Home</a></li>
+              <li className="nav__item"><a href="#featured" className="nav__link">Featured</a></li>
+              <li className="nav__item"><a href="#products" className="nav__link">Products</a></li>
+              <li className="nav__item"><a href="#new" className="nav__link">New</a></li>
             </ul>
-            <div className="nav__close" id="nav-close">
-                <i className='bx bx-x' ></i>
+            <div className="nav__close" id="nav-close" onClick={handleToggleMenu}>
+              <i className='bx bx-x'></i>
             </div>
-        </div>
-        <div className="nav__btns">           
-            <i className='bx bx-moon change-theme' id="theme-button"></i>
-            <div className="nav__shop" id="cart-shop" >
-                <i className='bx bx-shopping-bag'></i>
+          </div>
+          <div className="nav__btns">           
+            <i 
+              className='bx bx-moon change-theme' 
+              id="theme-button" 
+              onClick={handleTheme}
+            ></i>
+            <div className="nav__shop" id="cart-shop" onClick={handleToggleCart}>
+              <i className='bx bx-shopping-bag'></i>
             </div>
-            <div className="nav__toggle" id="nav-toggle">
-                <i className='bx bx-grid-alt' ></i>
+            <div className="nav__toggle" id="nav-toggle" onClick={handleToggleMenu}>
+              <i className='bx bx-grid-alt'></i>
             </div>
-        </div>
-    </nav>
-</header>
-{/*Itt jelenjen meg a Cart ha az ikonra kattintottunk */}
- </>
+          </div>
+        </nav>
+      </header>
+      {showCart && <Cart onClose={handleToggleCart} />}
+    </>
   )
 }
 

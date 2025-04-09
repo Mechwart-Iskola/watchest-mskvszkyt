@@ -16,8 +16,8 @@
 }
 
 .newsletter__subscribe {
-
-
+    display: flex;
+    flex-direction: column;
     row-gap: .75rem;
 }
 
@@ -54,7 +54,9 @@
         padding: 4.5rem;
     }
 
-    .newsletter__subscribe {}
+    .newsletter__subscribe {
+        flex-direction: row;
+    }
 
     .newsletter__input {
         width: 100%;

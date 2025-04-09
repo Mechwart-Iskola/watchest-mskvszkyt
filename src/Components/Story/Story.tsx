@@ -32,6 +32,7 @@ const Story = () => {
 
         <div className="story__images">
             {/* Itt jelenítsd meg a story.png képet, add hozzá a story__img osztályt */}
+            <img src="img/story.png" alt="story" className='story__img'/>
             <div className="story__square"></div>
         </div>
     </div>
